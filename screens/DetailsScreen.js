@@ -15,7 +15,7 @@ function DetailsScreen() {
         <MaskedView
           maskElement={
             <Text style={styles.inputText}>
-              {inputText || "What Airport are you looking for?"}
+              {inputText || "What Airport you looking for?"}
             </Text>
           }
         >
@@ -29,7 +29,7 @@ function DetailsScreen() {
               onChangeText={setInputText}
               value={inputText}
               placeholder="What Airport you looking for?"
-              placeholderTextColor="#FFFFFF"
+              placeholderTextColor="transparent"
               keyboardType="text"
             />
           </LinearGradient>
@@ -87,10 +87,10 @@ const styles = StyleSheet.create({
 
   searchBarInp: {
     flex: 1,
-    backgroundColor: "#FFFFFF",
     fontSize: 16,
     fontWeight: "600",
     color: "transparent",
+    backgroundColor: "transparent",
     marginLeft: 20,
   },
 
