@@ -1,21 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, View, Text, TextInput, Image } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
+import MaskedView from "@react-native-masked-view/masked-view";
 
 function DetailsScreen() {
+  const [inputText, setInputText] = useState("");
+
   return (
     <View style={styles.background}>
       <View style={styles.container}>
-        <Text style={styles.title}>TITLE</Text>
+        <Text style={styles.title}>EDDM</Text>
       </View>
       <View style={styles.searchBarCon}>
-        <TextInput
-          style={styles.searchBarInp}
-          // onChangeText={onChangeNumber}
-          // value={number}
-          placeholder="What Airport you looking for?"
-          placeholderTextColor="#FFFFFF"
-          keyboardType="text"
-        />
+        <MaskedView
+          maskElement={
+            <Text style={styles.inputText}>
+              {inputText || "What Airport are you looking for?"}
+            </Text>
+          }
+        >
+          <LinearGradient
+            colors={["#66A1F3", "#22C9A6"]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+          >
+            <TextInput
+              style={styles.searchBarInp}
+              onChangeText={setInputText}
+              value={inputText}
+              placeholder="What Airport you looking for?"
+              placeholderTextColor="#FFFFFF"
+              keyboardType="text"
+            />
+          </LinearGradient>
+        </MaskedView>
         <Image
           source={require("../assets/search_gradient.png")}
           style={styles.searchBarIcon}
@@ -59,12 +77,20 @@ const styles = StyleSheet.create({
     gap: 10,
   },
 
-  searchBarInp: {
+  inputText: {
     flex: 1,
-    backgroundColor: "transparent",
     fontSize: 16,
     fontWeight: "600",
-    color: "#FFFFFF",
+    textAlign: "left",
+    marginLeft: 20,
+  },
+
+  searchBarInp: {
+    flex: 1,
+    backgroundColor: "#FFFFFF",
+    fontSize: 16,
+    fontWeight: "600",
+    color: "transparent",
     marginLeft: 20,
   },
 
