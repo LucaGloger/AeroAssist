@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   View,
@@ -6,42 +6,78 @@ import {
   Text,
   TextInput,
   Image,
+  Alert,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import MaskedView from "@react-native-masked-view/masked-view";
+import { fetchFlightInfo } from "../js/dataViewModel";
 
 function FlightInfoScreen() {
   const [inputText, setInputText] = useState("");
+  const [flightData, setFlightData] = useState(null);
   const maxLength = 20;
+
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const data = await fetchFlightInfo();
+        setFlightData(data);
+
+        const currentFlight = data.currentFlight;
+        const airplane = data.airplane;
+        const callsign = data.callsign;
+        const route = data.route;
+
+        const obt = data.obt;
+        const std = data.std;
+        const sta = data.sta;
+        const ibt = data.ibt;
+      } catch (error) {
+        Alert.alert("Error", "Data couldn't Load.");
+      }
+    };
+
+    loadData();
+  }, []);
 
   return (
     <View style={styles.background}>
       <ScrollView style={styles.ScrollView}>
         <View style={[styles.container, { marginBottom: 10 }]}>
           <Text style={styles.title}>Current Flight</Text>
-          <Text style={styles.containerText}>LFPG-GMME</Text>
+          <Text style={styles.containerText}>
+            {flightData ? flightData.currentFlight : "Loading..."}
+          </Text>
           <Text style={styles.title}>Airplane</Text>
-          <Text style={styles.containerText}>FENIX A320</Text>
+          <Text style={styles.containerText}>
+            {flightData ? flightData.airplane : "Loading..."}
+          </Text>
           <Text style={styles.title}>Callsign</Text>
-          <Text style={styles.containerText}>AFR22VN</Text>
+          <Text style={styles.containerText}>
+            {flightData ? flightData.callsign : "Loading..."}
+          </Text>
           <Text style={styles.title}>Route</Text>
           <Text style={styles.containerText}>
-            AGOP6D AGOPA DCT ARKIP DCT ARMAL DCT ARTAX DCT BEBIX DCT LMG DCT
-            UVELI DCT OSMOB DCT VAVIX DCT NETUK DCT PPN DCT NOLSA DCT ALEPO DCT
-            VASUM DCT GARVU DCT BANEV DCT BAN DCT PINAR DCT CJN DCT INTAX DCT
-            NASOS DCT ANZAN DCT BLN DCT MGA DCT PIMOS DCT GALTO UB11 TUSOR
-            TUSO1H
+            {flightData ? flightData.route : "Loading..."}
           </Text>
         </View>
         <View style={styles.container}>
           <Text style={styles.title}>OBT</Text>
-          <Text style={styles.containerText}>00:00</Text>
+          <Text style={styles.containerText}>
+            {flightData ? flightData.obt : "Loading..."}
+          </Text>
           <Text style={styles.title}>STD</Text>
-          <Text style={styles.containerText}>14:09</Text>
+          <Text style={styles.containerText}>
+            {flightData ? flightData.std : "Loading..."}
+          </Text>
           <Text style={styles.title}>STA</Text>
-          <Text style={styles.containerText}>00:00</Text>
+          <Text style={styles.containerText}>
+            {flightData ? flightData.sta : "Loading..."}
+          </Text>
           <Text style={styles.title}>IBT</Text>
-          <Text style={styles.containerText}>00:00</Text>
+          <Text style={styles.containerText}>
+            {flightData ? flightData.ibt : "Loading..."}
+          </Text>
         </View>
       </ScrollView>
       <View style={styles.searchBarCon}>
@@ -67,7 +103,7 @@ function FlightInfoScreen() {
           style={styles.searchBarInp}
           onChangeText={setInputText}
           value={inputText}
-          placeholder="What Airport you looking for?"
+          placeholder="What Information you looking for?"
           placeholderTextColor="transparent"
           keyboardType="text"
           maxLength={maxLength}
@@ -147,7 +183,7 @@ const styles = StyleSheet.create({
   },
 
   searchBarInp: {
-    position: "relative",
+    position: "absolute",
     height: "100%",
     width: "100%",
     fontSize: 16,

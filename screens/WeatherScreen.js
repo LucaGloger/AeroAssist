@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     color: "transparent",
     backgroundColor: "transparent",
-    marginLeft: 20,
+    marginLeft: 17,
   },
 
   searchBarIcon: {
