@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "AeroAssist",
-    "slug": "AeroAssist",
+    "slug": "aeroassist",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -19,10 +19,17 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.lucagloger.aeroassist"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "a96da6c3-0cd1-4dd3-9ccb-5a413d6bf178"
+      }
+    },
+    "owner": "lucagloger"
   }
 }
