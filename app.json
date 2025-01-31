@@ -3,7 +3,7 @@
     "name": "AeroAssist",
     "slug": "aeroassist",
     "version": "1.0.0",
-    "orientation": "portrait",
+    "orientation": "default",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
@@ -29,6 +29,10 @@
       "eas": {
         "projectId": "a96da6c3-0cd1-4dd3-9ccb-5a413d6bf178"
       }
+    },
+    "androidStatusBar": {
+      "backgroundColor": "#000000",
+      "translucent": false
     },
     "owner": "lucagloger"
   }

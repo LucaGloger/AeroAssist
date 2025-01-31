@@ -3,9 +3,9 @@ import { StyleSheet, View, Text, TextInput, Image } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import MaskedView from "@react-native-masked-view/masked-view";
 
-function DetailsScreen() {
+function WeatherScreen() {
   const [inputText, setInputText] = useState("");
-  const maxLength = 15;
+  const maxLength = 20;
 
   return (
     <View style={styles.background}>
@@ -40,7 +40,7 @@ function DetailsScreen() {
           keyboardType="text"
           maxLength={maxLength}
           selectionColor="#FFFFFF"
-          cursorColor="#FFFFFF"
+          cursorColor="#66A1F3"
           caretHidden={false}
         />
         <Image
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
 
   title: {
     fontSize: 18,
-    fontWeight: "medium",
+    fontWeight: "600",
     color: "#FFFFFF",
   },
 
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     color: "transparent",
     backgroundColor: "transparent",
-    marginLeft: 17,
+    marginLeft: 20,
   },
 
   searchBarIcon: {
@@ -123,4 +123,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DetailsScreen;
+export default WeatherScreen;

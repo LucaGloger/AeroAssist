@@ -3,7 +3,8 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { StyleSheet, TouchableOpacity, Image } from "react-native";
 import { StatusBar } from "expo-status-bar";
-import DetailsScreen from "./screens/DetailsScreen";
+import WeatherScreen from "./screens/WeatherScreen";
+import FlightInfoScreen from "./screens/FlightInfoScreen";
 import HomeScreen from "./screens/HomeScreen";
 
 const Tab = createBottomTabNavigator();
@@ -107,11 +108,33 @@ export default function TabNavigator() {
             headerRight: renderHeaderRight,
           }}
         />
-        {["Weather", "FlightInfo", "Edit", "Checklist"].map((screenName) => (
+        <Tab.Screen
+          name="Weather"
+          component={WeatherScreen}
+          options={{
+            tabBarIcon: () => renderTabIcon("Weather", activeTab === "Weather"),
+            headerTitleAlign: "start",
+            borderBottomWidth: 0,
+            headerLeft: renderHeaderLeft,
+            headerRight: renderHeaderRight,
+          }}
+        />
+        <Tab.Screen
+          name="FlightInfo"
+          component={FlightInfoScreen}
+          options={{
+            tabBarIcon: () => renderTabIcon("FlightInfo", activeTab === "FlightInfo"),
+            headerTitleAlign: "start",
+            borderBottomWidth: 0,
+            headerLeft: renderHeaderLeft,
+            headerRight: renderHeaderRight,
+          }}
+        />
+        {["Edit", "Checklist"].map((screenName) => (
           <Tab.Screen
             key={screenName}
             name={screenName}
-            component={DetailsScreen}
+            component={WeatherScreen}
             options={{
               tabBarIcon: () =>
                 renderTabIcon(screenName, activeTab === screenName),
