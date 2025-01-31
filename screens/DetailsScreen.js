@@ -5,6 +5,7 @@ import MaskedView from "@react-native-masked-view/masked-view";
 
 function DetailsScreen() {
   const [inputText, setInputText] = useState("");
+  const maxLength = 15;
 
   return (
     <View style={styles.background}>
@@ -13,6 +14,7 @@ function DetailsScreen() {
       </View>
       <View style={styles.searchBarCon}>
         <MaskedView
+          style={styles.maskedView}
           maskElement={
             <Text style={styles.inputText}>
               {inputText || "What Airport you looking for?"}
@@ -24,16 +26,23 @@ function DetailsScreen() {
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 0 }}
           >
-            <TextInput
-              style={styles.searchBarInp}
-              onChangeText={setInputText}
-              value={inputText}
-              placeholder="What Airport you looking for?"
-              placeholderTextColor="transparent"
-              keyboardType="text"
-            />
+            <Text style={styles.gradientText}>
+              {inputText || "What Airport you looking for?"}
+            </Text>
           </LinearGradient>
         </MaskedView>
+        <TextInput
+          style={styles.searchBarInp}
+          onChangeText={setInputText}
+          value={inputText}
+          placeholder="What Airport you looking for?"
+          placeholderTextColor="transparent"
+          keyboardType="text"
+          maxLength={maxLength}
+          selectionColor="#FFFFFF"
+          cursorColor="#FFFFFF"
+          caretHidden={false}
+        />
         <Image
           source={require("../assets/search_gradient.png")}
           style={styles.searchBarIcon}
@@ -66,6 +75,7 @@ const styles = StyleSheet.create({
   },
 
   searchBarCon: {
+    position: "relative",
     height: 58,
     width: "100%",
     display: "flex",
@@ -77,6 +87,14 @@ const styles = StyleSheet.create({
     gap: 10,
   },
 
+  gradientText: {
+    fontSize: 16,
+    fontWeight: "600",
+    textAlign: "left",
+    marginLeft: 20,
+    color: "transparent",
+  },
+
   inputText: {
     flex: 1,
     fontSize: 16,
@@ -86,18 +104,22 @@ const styles = StyleSheet.create({
   },
 
   searchBarInp: {
-    flex: 1,
+    position: "absolute",
+    height: "100%",
+    width: "100%",
     fontSize: 16,
     fontWeight: "600",
     color: "transparent",
     backgroundColor: "transparent",
-    marginLeft: 20,
+    marginLeft: 17,
   },
 
   searchBarIcon: {
+    position: "absolute",
+    right: 20,
     height: 24,
     width: 24,
-    marginRight: 20,
+    backgroundColor: "#17171A",
   },
 });
 
