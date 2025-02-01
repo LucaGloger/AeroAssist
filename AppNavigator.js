@@ -123,7 +123,8 @@ export default function TabNavigator() {
           name="FlightInfo"
           component={FlightInfoScreen}
           options={{
-            tabBarIcon: () => renderTabIcon("FlightInfo", activeTab === "FlightInfo"),
+            tabBarIcon: () =>
+              renderTabIcon("FlightInfo", activeTab === "FlightInfo"),
             headerTitleAlign: "start",
             borderBottomWidth: 0,
             headerLeft: renderHeaderLeft,
