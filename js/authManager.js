@@ -1,15 +1,29 @@
-import {
-  getAuth,
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { useState } from "react";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../js/firebaseConfig";
 
-const authInstance = getAuth();
+const SigninViewModel = (navigation) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
-export async function signIn(email, password) {
-  try {
-    await signInWithEmailAndPassword(authInstance, email, password);
-  } catch (error) {
-    console.error("Failed to SignIn: ", error);
-  }
-}
+  const handleSignin = async () => {
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      navigation.navigate("Home");
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  return {
+    email,
+    setEmail,
+    password,
+    setPassword,
+    error,
+    handleSignin,
+  };
+};
+
+export default SigninViewModel;

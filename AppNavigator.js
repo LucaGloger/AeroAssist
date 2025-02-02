@@ -3,6 +3,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { StyleSheet, TouchableOpacity, Image } from "react-native";
 import { StatusBar } from "expo-status-bar";
+import LoginScreen from "./screens/LoginScreen";
 import WeatherScreen from "./screens/WeatherScreen";
 import FlightInfoScreen from "./screens/FlightInfoScreen";
 import HomeScreen from "./screens/HomeScreen";

@@ -56,7 +56,7 @@ function FlightInfoScreen() {
   if (isLoading) {
     return (
       <View style={loadingStyles.loadingContainer}>
-        <ActivityIndicator size="large" color="#66A1F3" />
+        <ActivityIndicator size="large" color="#387AFF" />
       </View>
     );
   }
@@ -252,7 +252,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     color: "transparent",
     backgroundColor: "transparent",
-    marginLeft: 17,
+    marginLeft: 20,
   },
 
   searchBarIcon: {
