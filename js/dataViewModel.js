@@ -11,10 +11,18 @@ export const fetchFlightInfo = async () => {
   const callsign = data.atc.callsign;
   const route = data.general.route;
 
-  const obt = data.origin.metar_time.substring(14, 19);
-  const std = data.params.time_generated.substring(14, 19);
-  const sta = data.destination.metar_time.substring(14, 19);
-  const ibt = data.destination.metar_time.substring(14, 19);
+  const obt = data.origin.metar_time.substring(14, 20);
+  const std = data.params.time_generated.substring(14, 20);
+  const sta = data.destination.metar_time.substring(14, 20);
+  const ibt = data.destination.metar_time.substring(14, 20);
+
+  const pax = data.general.passengers;
+  const cargo = data.weights.cargo;
+  const payload = data.weights.payload;
+  const zfw = data.weights.est_zfw;
+  const fuel = data.fuel.plan_ramp;
+  const tow = data.weights.est_tow;
+  const law = data.tlr.landing.conditions.planned_weight;
 
   return {
     currentFlight,
@@ -25,5 +33,12 @@ export const fetchFlightInfo = async () => {
     std,
     sta,
     ibt,
+    pax,
+    cargo,
+    payload,
+    zfw,
+    fuel,
+    tow,
+    law,
   };
 };

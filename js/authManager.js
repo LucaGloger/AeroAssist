@@ -1,10 +1,15 @@
-import { firebase } from "./firebaseConfig";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-export const handleLogin = async (email, password) => {
+const authInstance = getAuth();
+
+export async function signIn(email, password) {
   try {
-    await firebase.auth().signInWithEmailAndPassword(email, password);
-    return null;
+    await signInWithEmailAndPassword(authInstance, email, password);
   } catch (error) {
-    return error.message;
+    console.error("Failed to SignIn: ", error);
   }
-};
+}

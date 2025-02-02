@@ -7,6 +7,7 @@ import {
   TextInput,
   Image,
   Alert,
+  ActivityIndicator,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import MaskedView from "@react-native-masked-view/masked-view";
@@ -15,6 +16,7 @@ import { fetchFlightInfo } from "../js/dataViewModel";
 function FlightInfoScreen() {
   const [inputText, setInputText] = useState("");
   const [flightData, setFlightData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   const maxLength = 20;
 
   useEffect(() => {
@@ -32,18 +34,37 @@ function FlightInfoScreen() {
         const std = data.std;
         const sta = data.sta;
         const ibt = data.ibt;
+
+        const pax = data.pax;
+        const cargo = data.cargo;
+        const payload = data.payload;
+        const zfw = data.zfw;
+        const fuel = data.fuel;
+        const tow = data.tow;
+        const law = data.law;
+
+        setIsLoading(false);
       } catch (error) {
         Alert.alert("Error", "Data couldn't Load.");
+        setIsLoading(false);
       }
     };
 
     loadData();
   }, []);
 
+  if (isLoading) {
+    return (
+      <View style={loadingStyles.loadingContainer}>
+        <ActivityIndicator size="large" color="#66A1F3" />
+      </View>
+    );
+  }
+
   return (
     <View style={styles.background}>
       <ScrollView style={styles.ScrollView}>
-        <View style={[styles.container, { marginBottom: 10 }]}>
+        <View style={[styles.container, { marginBottom: 20 }]}>
           <Text style={styles.title}>Current Flight</Text>
           <Text style={styles.containerText}>
             {flightData ? flightData.currentFlight : "Loading..."}
@@ -61,7 +82,7 @@ function FlightInfoScreen() {
             {flightData ? flightData.route : "Loading..."}
           </Text>
         </View>
-        <View style={styles.container}>
+        <View style={[styles.container, { marginBottom: 20 }]}>
           <Text style={styles.title}>OBT</Text>
           <Text style={styles.containerText}>
             {flightData ? flightData.obt : "Loading..."}
@@ -77,6 +98,36 @@ function FlightInfoScreen() {
           <Text style={styles.title}>IBT</Text>
           <Text style={styles.containerText}>
             {flightData ? flightData.ibt : "Loading..."}
+          </Text>
+        </View>
+        <View style={styles.container}>
+          <Text style={styles.title}>PAX</Text>
+          <Text style={styles.containerText}>
+            {flightData ? flightData.pax : "Loading..."}
+          </Text>
+          <Text style={styles.title}>Cargo</Text>
+          <Text style={styles.containerText}>
+            {flightData ? flightData.cargo : "Loading..."} kg
+          </Text>
+          <Text style={styles.title}>Payload</Text>
+          <Text style={styles.containerText}>
+            {flightData ? flightData.payload : "Loading..."} kg
+          </Text>
+          <Text style={styles.title}>ZFW</Text>
+          <Text style={styles.containerText}>
+            {flightData ? flightData.zfw : "Loading..."} kg
+          </Text>
+          <Text style={styles.title}>Fuel</Text>
+          <Text style={styles.containerText}>
+            {flightData ? flightData.fuel : "Loading..."} kg
+          </Text>
+          <Text style={styles.title}>TOW</Text>
+          <Text style={styles.containerText}>
+            {flightData ? flightData.tow : "Loading..."} kg
+          </Text>
+          <Text style={styles.title}>LAW</Text>
+          <Text style={styles.containerText}>
+            {flightData ? flightData.law : "Loading..."} kg
           </Text>
         </View>
       </ScrollView>
@@ -119,6 +170,17 @@ function FlightInfoScreen() {
     </View>
   );
 }
+
+const loadingStyles = StyleSheet.create({
+  loadingContainer: {
+    flex: 1,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#000000",
+    padding: 10,
+  }
+});
 
 const styles = StyleSheet.create({
   background: {
