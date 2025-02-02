@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { auth } from "../js/firebaseConfig";
 
 const SigninViewModel = (navigation) => {
