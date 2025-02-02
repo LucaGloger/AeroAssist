@@ -43,7 +43,7 @@ export default function TabNavigator() {
       height: 62,
       borderTopWidth: 0,
     },
-    tabBarLabelStyle: { fontSize: 11, fontWeight: "medium" },
+    tabBarLabelStyle: { fontSize: 11 },
     headerStyle: {
       height: 46,
       backgroundColor: "#000000",
@@ -83,6 +83,18 @@ export default function TabNavigator() {
     );
   };
 
+  const getTabOptions = (routeName) => ({
+    tabBarIcon: () => renderTabIcon(routeName, activeTab === routeName),
+    tabBarLabelStyle: {
+      fontSize: 11,
+      fontWeight: activeTab === routeName ? "bold" : "normal",
+    },
+    headerTitleAlign: "start",
+    borderBottomWidth: 0,
+    headerLeft: renderHeaderLeft,
+    headerRight: renderHeaderRight,
+  });
+
   return (
     <>
       <StatusBar style="light" translucent={false} />
@@ -99,50 +111,24 @@ export default function TabNavigator() {
         <Tab.Screen
           name="Aero AI"
           component={HomeScreen}
-          options={{
-            tabBarIcon: () => renderTabIcon("Aero AI", activeTab === "Aero AI"),
-            headerTitleAlign: "start",
-            borderBottomWidth: 0,
-            headerLeft: renderHeaderLeft,
-            headerRight: renderHeaderRight,
-          }}
+          options={getTabOptions("Aero AI")}
         />
         <Tab.Screen
           name="Weather"
           component={WeatherScreen}
-          options={{
-            tabBarIcon: () => renderTabIcon("Weather", activeTab === "Weather"),
-            headerTitleAlign: "start",
-            borderBottomWidth: 0,
-            headerLeft: renderHeaderLeft,
-            headerRight: renderHeaderRight,
-          }}
+          options={getTabOptions("Weather")}
         />
         <Tab.Screen
           name="FlightInfo"
           component={FlightInfoScreen}
-          options={{
-            tabBarIcon: () =>
-              renderTabIcon("FlightInfo", activeTab === "FlightInfo"),
-            headerTitleAlign: "start",
-            borderBottomWidth: 0,
-            headerLeft: renderHeaderLeft,
-            headerRight: renderHeaderRight,
-          }}
+          options={getTabOptions("FlightInfo")}
         />
         {["Edit", "Checklist"].map((screenName) => (
           <Tab.Screen
             key={screenName}
             name={screenName}
             component={WeatherScreen}
-            options={{
-              tabBarIcon: () =>
-                renderTabIcon(screenName, activeTab === screenName),
-              headerTitleAlign: "start",
-              borderBottomWidth: 0,
-              headerLeft: renderHeaderLeft,
-              headerRight: renderHeaderRight,
-            }}
+            options={getTabOptions(screenName)}
           />
         ))}
       </Tab.Navigator>

@@ -40,5 +40,19 @@ export const fetchFlightInfo = async () => {
     fuel,
     tow,
     law,
+    origin: data.origin.icao_code,
+    destination: data.destination.icao_code,
   };
+};
+
+export const fetchWeatherData = async (airport) => {
+  try {
+    const url = `https://aviationweather.gov/api/data/metar?ids=${airport}&format=json`;
+    const response = await fetch(url);
+    const data = await response.json();
+  
+    return data[0];
+  } catch (error) {
+    console.log("Error getting Weather Data");
+  }
 };
