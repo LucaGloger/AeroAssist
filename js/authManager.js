@@ -1,18 +1,17 @@
 import { useState } from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { auth } from "../js/firebaseConfig";
 
 const SigninViewModel = (navigation) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
 
   const handleSignin = async () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       navigation.navigate("Home");
-    } catch (err) {
-      setError(err.message);
+    } catch (error) {
+      console.log("Login failed!", error.message);
     }
   };
 
@@ -21,9 +20,23 @@ const SigninViewModel = (navigation) => {
     setEmail,
     password,
     setPassword,
-    error,
     handleSignin,
   };
 };
 
-export default SigninViewModel;
+const SignOut = (navigation) => {
+  const handleSignOut = async () => {
+    try {
+      await signOut(auth);
+      navigation.navigate("Login");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  return {
+    handleSignOut,
+  };
+}
+
+export {SigninViewModel, SignOut};

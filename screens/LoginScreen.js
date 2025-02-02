@@ -5,14 +5,13 @@ import {
   Text,
   TextInput,
   Image,
-  Alert,
   TouchableOpacity,
 } from "react-native";
 
-import SigninViewModel from "../js/authManager";
+import { SigninViewModel } from "../js/authManager";
 
 const LoginScreen = ({ navigation }) => {
-  const { email, setEmail, password, setPassword, error, handleLogin } =
+  const { email, setEmail, password, setPassword, handleSignin } =
     SigninViewModel(navigation);
 
   return (
@@ -60,7 +59,10 @@ const LoginScreen = ({ navigation }) => {
           />
         </View>
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.continueButton} onPress={handleLogin}>
+          <TouchableOpacity
+            style={styles.continueButton}
+            onPress={() => handleSignin()}
+          >
             <Text style={styles.buttonText}>Next</Text>
           </TouchableOpacity>
         </View>
