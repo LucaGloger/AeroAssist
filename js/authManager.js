@@ -2,6 +2,7 @@ import { useState } from "react";
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
+  sendPasswordResetEmail,
   signOut,
 } from "firebase/auth";
 import { auth, db } from "../js/firebaseConfig";
@@ -36,7 +37,11 @@ const SignupViewModel = (navigation) => {
 
   const handleSignup = async () => {
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
       const user = userCredential.user;
 
       await setDoc(doc(db, "users", user.uid), {
@@ -61,7 +66,26 @@ const SignupViewModel = (navigation) => {
   };
 };
 
-const SignOut = (navigation) => {
+const ResetPasswordViewModel = (navigation) => {
+  const [email, setEmail] = useState("");
+
+  const handleResetPassword = async () => {
+    try {
+      await sendPasswordResetEmail(auth, email);
+      navigation.navigate("EmailSent");
+    } catch (error) {
+      console.log("Reset Password failed!", error.message);
+    }
+  };
+
+  return {
+    email,
+    setEmail,
+    handleResetPassword,
+  };
+};
+
+const SignOutViewModel = (navigation) => {
   const handleSignOut = async () => {
     try {
       await signOut(auth);
@@ -72,8 +96,8 @@ const SignOut = (navigation) => {
   };
 
   return {
-    handleSignOut,
+    handleSignOut
   };
 };
 
-export { SigninViewModel, SignupViewModel, SignOut };
+export { SigninViewModel, SignupViewModel, ResetPasswordViewModel, SignOutViewModel };

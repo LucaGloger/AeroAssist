@@ -7,76 +7,39 @@ import {
   TouchableOpacity,
 } from "react-native";
 
-import { SigninViewModel } from "../js/authManager";
-
-const LoginScreen = ({ navigation }) => {
-  const { email, setEmail, password, setPassword, handleSignin } =
-    SigninViewModel(navigation);
-
+const EmailSentScreen = ({ navigation }) => {
   return (
     <View style={styles.background}>
       <View style={styles.headerContainer}>
-        <Text style={styles.headerTitle}>Simpli Account</Text>
+        <Image
+          source={require("../assets/favicon.png")}
+          style={styles.headerIcon}
+        />
+        <Text style={styles.headerTitle}>Email sent</Text>
         <Text style={styles.headerText}>
-          Your gateway to Simpli apps and services
+          A password reset email has been sent to your email.
         </Text>
       </View>
       <View style={styles.mainContainer}>
-        <View style={styles.inputContainer}>
-          <Image
-            source={require("../assets/email.png")}
-            style={styles.inputIcon}
-          />
-          <TextInput
-            style={styles.input}
-            onChangeText={setEmail}
-            value={email}
-            placeholder="Email"
-            placeholderTextColor="#FFFFFF"
-            keyboardType="email"
-            selectionColor="#FFFFFF"
-            cursorColor="#387AFF"
-            caretHidden={false}
-          />
-        </View>
-        <View style={styles.inputContainer}>
-          <Image
-            source={require("../assets/password.png")}
-            style={styles.inputIcon}
-          />
-          <TextInput
-            style={styles.input}
-            onChangeText={setPassword}
-            value={password}
-            placeholder="Password"
-            placeholderTextColor="#FFFFFF"
-            keyboardType="password"
-            selectionColor="#FFFFFF"
-            cursorColor="#387AFF"
-            caretHidden={false}
-            secureTextEntry
-          />
+        <View style={styles.container}>
+          <Text style={styles.title}>You're almost there!</Text>
+          <Text style={styles.containerText}>
+            You should already have an email from us in your inbox.
+          </Text>
+          <Text style={styles.containerText}>
+            If you have not received an email, please send us an email to
+            luca.kloger@gmail.com
+          </Text>
+          <Text style={styles.containerText}>
+            Your Simpli Team
+          </Text>
         </View>
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={styles.continueButton}
-            onPress={() => handleSignin()}
+            onPress={() => navigation.navigate("Login")}
           >
-            <Text style={styles.buttonText}>Next</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.helpContainer}>
-          <TouchableOpacity
-            style={styles.helpButton}
-            onPress={() => navigation.navigate("Signup")}
-          >
-            <Text style={styles.helpText}>Create account</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.helpButton}
-            onPress={() => navigation.navigate("ResetPassword")}
-          >
-            <Text style={styles.helpText}>Forgot Password?</Text>
+            <Text style={styles.buttonText}>Signin</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -102,6 +65,11 @@ const styles = StyleSheet.create({
     gap: 10,
   },
 
+  headerIcon: {
+    height: 70,
+    width: 70,
+  },
+
   headerTitle: {
     fontSize: 36,
     fontWeight: "600",
@@ -121,6 +89,27 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-start",
     gap: 10,
+  },
+
+  container: {
+    height: "auto",
+    width: "100%",
+    backgroundColor: "#17171A",
+    borderRadius: 28,
+    gap: 10,
+    padding: 20,
+  },
+
+  title: {
+    fontSize: 18,
+    fontWeight: "600",
+    color: "#FFFFFF",
+  },
+
+  containerText: {
+    fontSize: 14,
+    fontWeight: "400",
+    color: "#FFFFFF",
   },
 
   inputContainer: {
@@ -189,4 +178,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoginScreen;
+export default EmailSentScreen;

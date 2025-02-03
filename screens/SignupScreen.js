@@ -95,13 +95,7 @@ const SignUpScreen = ({ navigation }) => {
             style={styles.helpButton}
             onPress={() => navigation.navigate("Login")}
           >
-            <Text style={styles.helpText}>Register</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.helpButton}
-            onPress={() => navigation.navigate("Login")}
-          >
-            <Text style={styles.helpText}>Forgot Password?</Text>
+            <Text style={styles.helpText}>Already have an account? Sign In</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -199,7 +193,7 @@ const styles = StyleSheet.create({
 
   helpContainer: {
     height: "auto",
-    width: "100%",
+    width: 159,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -210,6 +204,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "400",
     color: "#FFFFFF",
+    textAlign: "center",
     textDecorationLine: "underline",
   },
 });

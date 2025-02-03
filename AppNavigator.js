@@ -3,6 +3,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import LoginScreen from "./screens/LoginScreen";
 import SignupScreen from "./screens/SignupScreen";
+import ResetPasswordScreen from "./screens/ResetPasswordScreen";
+import EmailSentScreen from "./screens/EmailSentScreen";
 import TabNavigator from "./TabNavigator";
 import { auth } from "./js/firebaseConfig";
 import { onAuthStateChanged } from "firebase/auth";
@@ -42,6 +44,16 @@ const AppNavigator = () => {
         <Stack.Screen
           name="Signup"
           component={SignupScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="ResetPassword"
+          component={ResetPasswordScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="EmailSent"
+          component={EmailSentScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen

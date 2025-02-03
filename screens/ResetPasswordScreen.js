@@ -7,18 +7,18 @@ import {
   TouchableOpacity,
 } from "react-native";
 
-import { SigninViewModel } from "../js/authManager";
+import { ResetPasswordViewModel } from "../js/authManager";
 
-const LoginScreen = ({ navigation }) => {
-  const { email, setEmail, password, setPassword, handleSignin } =
-    SigninViewModel(navigation);
+const ResetPasswordScreen = ({ navigation }) => {
+  const { email, setEmail, handleResetPassword } =
+    ResetPasswordViewModel(navigation);
 
   return (
     <View style={styles.background}>
       <View style={styles.headerContainer}>
-        <Text style={styles.headerTitle}>Simpli Account</Text>
+        <Text style={styles.headerTitle}>Reset Password</Text>
         <Text style={styles.headerText}>
-          Your gateway to Simpli apps and services
+          Reset your Simpli Account Password
         </Text>
       </View>
       <View style={styles.mainContainer}>
@@ -39,30 +39,12 @@ const LoginScreen = ({ navigation }) => {
             caretHidden={false}
           />
         </View>
-        <View style={styles.inputContainer}>
-          <Image
-            source={require("../assets/password.png")}
-            style={styles.inputIcon}
-          />
-          <TextInput
-            style={styles.input}
-            onChangeText={setPassword}
-            value={password}
-            placeholder="Password"
-            placeholderTextColor="#FFFFFF"
-            keyboardType="password"
-            selectionColor="#FFFFFF"
-            cursorColor="#387AFF"
-            caretHidden={false}
-            secureTextEntry
-          />
-        </View>
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={styles.continueButton}
-            onPress={() => handleSignin()}
+            onPress={() => handleResetPassword()}
           >
-            <Text style={styles.buttonText}>Next</Text>
+            <Text style={styles.buttonText}>Reset</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.helpContainer}>
@@ -74,9 +56,9 @@ const LoginScreen = ({ navigation }) => {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.helpButton}
-            onPress={() => navigation.navigate("ResetPassword")}
+            onPress={() => navigation.navigate("Login")}
           >
-            <Text style={styles.helpText}>Forgot Password?</Text>
+            <Text style={styles.helpText}>Already have an account? Sign In</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -106,6 +88,7 @@ const styles = StyleSheet.create({
     fontSize: 36,
     fontWeight: "600",
     color: "#FFFFFF",
+    textAlign: "center",
   },
 
   headerText: {
@@ -189,4 +172,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoginScreen;
+export default ResetPasswordScreen;

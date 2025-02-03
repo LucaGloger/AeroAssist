@@ -5,7 +5,7 @@ import { StatusBar } from "expo-status-bar";
 import WeatherScreen from "./screens/WeatherScreen";
 import FlightInfoScreen from "./screens/FlightInfoScreen";
 import HomeScreen from "./screens/HomeScreen";
-import { SignOut } from "./js/authManager";
+import { SignOutViewModel } from "./js/authManager";
 
 const Tab = createBottomTabNavigator();
 
@@ -32,8 +32,10 @@ const icons = {
   },
 };
 
-export default function TabNavigator() {
+export default function TabNavigator({ navigation }) {
   const [activeTab, setActiveTab] = useState("FlightInfo");
+
+  const { handleSignOut } = SignOutViewModel(navigation);
 
   const screenOptions = {
     tabBarActiveTintColor: "#FFFFFF",
@@ -59,6 +61,7 @@ export default function TabNavigator() {
   const renderHeaderRight = () => (
     <TouchableOpacity
       style={{ paddingRight: 10 }}
+      onPress={() => handleSignOut()}
     >
       <Image source={require("./assets/more.png")} style={styles.icon} />
     </TouchableOpacity>
@@ -127,7 +130,7 @@ export default function TabNavigator() {
           <Tab.Screen
             key={screenName}
             name={screenName}
-            component={WeatherScreen}
+            component={HomeScreen}
             options={getTabOptions(screenName)}
           />
         ))}
