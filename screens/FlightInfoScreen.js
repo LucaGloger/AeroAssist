@@ -63,7 +63,7 @@ function FlightInfoScreen() {
 
   return (
     <View style={styles.background}>
-      <ScrollView style={styles.ScrollView}>
+      <ScrollView style={styles.ScrollView} overScrollMode="always" bounces={true}>
         <View style={[styles.container, { marginBottom: 20 }]}>
           <Text style={styles.title}>Current Flight</Text>
           <Text style={styles.containerText}>
@@ -191,6 +191,7 @@ const styles = StyleSheet.create({
 
   ScrollView: {
     flex: 1,
+    backgroundColor: "#000000",
     borderRadius: 28,
   },
 

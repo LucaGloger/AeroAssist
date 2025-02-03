@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import LoginScreen from "./screens/LoginScreen";
+import SignupScreen from "./screens/SignupScreen";
 import TabNavigator from "./TabNavigator";
 import { auth } from "./js/firebaseConfig";
 import { onAuthStateChanged } from "firebase/auth";
@@ -18,6 +19,7 @@ const AppNavigator = () => {
       setUser(currentUser);
       setLoading(false);
     });
+    
     return unsubscribe;
   }, []);
 
@@ -35,6 +37,11 @@ const AppNavigator = () => {
         <Stack.Screen
           name="Login"
           component={LoginScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Signup"
+          component={SignupScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen

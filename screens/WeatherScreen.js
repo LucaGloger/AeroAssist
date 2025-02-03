@@ -65,7 +65,7 @@ function WeatherScreen() {
 
   return (
     <View style={styles.background}>
-      <ScrollView style={styles.ScrollView}>
+      <ScrollView style={styles.ScrollView} overScrollMode="always" bounces={true}>
         <View style={styles.container}>
           <Text style={styles.title}>Current Airport</Text>
           <Text style={styles.containerText}>

@@ -67,8 +67,18 @@ const LoginScreen = ({ navigation }) => {
           </TouchableOpacity>
         </View>
         <View style={styles.helpContainer}>
-          <Text style={styles.helpText}>Create account</Text>
-          <Text style={styles.helpText}>Forgot Password?</Text>
+          <TouchableOpacity
+            style={styles.helpButton}
+            onPress={() => navigation.navigate("Signup")}
+          >
+            <Text style={styles.helpText}>Create account</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.helpButton}
+            onPress={() => navigation.navigate("Login")}
+          >
+            <Text style={styles.helpText}>Forgot Password?</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </View>
@@ -103,6 +113,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "400",
     color: "#FFFFFF",
+    textAlign: "center",
   },
 
   mainContainer: {
