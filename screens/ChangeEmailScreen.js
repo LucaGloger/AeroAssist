@@ -7,41 +7,48 @@ import {
   TextInput,
   Image,
   TouchableOpacity,
+  Button,
 } from "react-native";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 const ChangeEmailScreen = ({ navigation }) => {
-  const [email, setEmail] = useState("Loading...");
   const [newEmail, setNewEmail] = useState("");
-
-  useEffect(() => {
-    const auth = getAuth();
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setEmail(user ? user.email : "Guest");
-    });
-
-    return () => unsubscribe();
-  }, []);
 
   return (
     <View style={styles.background}>
       <View style={styles.mainView}>
-        <Text style={styles.screenTitle}>Change your E-Mail ID?</Text>
+        <Text style={styles.screenTitle}>Changing your email ID</Text>
         <Text style={[styles.containerTitle, { marginTop: 10 }]}>
-          Current E-Mail-ID
+          New email address
         </Text>
-        <View style={styles.container} activeOpacity={0.7}>
+        <View style={styles.container}>
           <TextInput
             style={styles.input}
             onChangeText={setNewEmail}
             value={newEmail}
-            placeholder={email}
-            placeholderTextColor="#FFFFFF"
-            keyboardType="password"
+            placeholder="Enter email address"
+            placeholderTextColor="#ABABAB"
+            keyboardType="email"
             selectionColor="#FFFFFF"
             cursorColor="#387AFF"
             caretHidden={false}
           />
+        </View>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            style={styles.button}
+            activeOpacity={0.7}
+            onPress={() => navigation.goBack()}
+          >
+            <Text style={styles.buttonText}>Cancel</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.button}
+            activeOpacity={0.7}
+            onPress={() => navigation.goBack()}
+          >
+            <Text style={styles.buttonText}>Cancel</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </View>
@@ -81,40 +88,47 @@ const styles = StyleSheet.create({
   },
 
   container: {
-    height: 85,
+    height: "auto",
     width: "100%",
-    alignItems: "center",
-    justifyContent: "center",
     backgroundColor: "#17171A",
     borderRadius: 28,
     gap: 0,
-    padding: 20,
+    paddingHorizontal: 20,
   },
 
   input: {
-    height: "100%",
+    height: 58,
+    fontSize: 18,
+    fontWeight: "400",
+    color: "#FFFFFF",
+  },
+
+  buttonContainer: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "row",
+    height: "auto",
     width: "100%",
-    fontSize: 18,
-    fontWeight: "400",
-    color: "#FFFFFF",
+    position: "absolute",
+    left: 0,
+    bottom: 0,
   },
 
-  title: {
-    fontSize: 18,
-    fontWeight: "400",
-    color: "#FFFFFF",
+  button: {
+    flex: 1,
+    height: 48,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#000000",
+    borderRadius: 30,
   },
 
-  containerText: {
-    fontSize: 14,
-    fontWeight: "400",
+  buttonText: {
+    fontSize: 16,
+    fontWeight: "600",
     color: "#FFFFFF",
-  },
-
-  containerTextBlue: {
-    fontSize: 14,
-    fontWeight: "400",
-    color: "#387AFF",
   },
 });
 

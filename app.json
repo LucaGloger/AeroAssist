@@ -34,6 +34,14 @@
       "backgroundColor": "#000000",
       "translucent": false
     },
-    "owner": "lucagloger"
+    "owner": "lucagloger",
+    "plugins": [
+      [
+        "expo-font",
+        {
+          "fonts": ["./assets/fonts/"]
+        }
+      ]
+    ]
   }
 }

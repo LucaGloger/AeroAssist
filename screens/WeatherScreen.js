@@ -15,30 +15,28 @@ import { fetchFlightInfo, fetchWeatherData } from "../js/dataViewModel";
 
 function WeatherScreen() {
   const [inputText, setInputText] = useState("");
-  const [flightData, setFlightData] = useState(null);
   const [weatherData, setWeatherData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   const maxLength = 4;
 
   useEffect(() => {
-      const loadData = async () => {
-        try {
-          const flightInfo = await fetchFlightInfo();
-          setFlightData(flightInfo);
+    const loadData = async () => {
+      try {
+        const flightInfo = await fetchFlightInfo();
 
-          const weather = await fetchWeatherData(flightInfo.origin);
-          setWeatherData(weather);
-  
-          setIsLoading(false);
-        } catch (error) {
-          Alert.alert("Error", "Data couldn't Load.");
-          setIsLoading(false);
-        }
-      };
-  
-      loadData();
-    }, []);
+        const weather = await fetchWeatherData(flightInfo.origin);
+        setWeatherData(weather);
+
+        setIsLoading(false);
+      } catch (error) {
+        Alert.alert("Error", "Data couldn't Load.");
+        setIsLoading(false);
+      }
+    };
+
+    loadData();
+  }, []);
 
   const fetchData = async () => {
     if (inputText.length === maxLength) {
@@ -65,42 +63,48 @@ function WeatherScreen() {
 
   return (
     <View style={styles.background}>
-      <ScrollView style={styles.ScrollView} overScrollMode="always" bounces={true}>
-        <View style={styles.container}>
-          <Text style={styles.title}>Current Airport</Text>
-          <Text style={styles.containerText}>
-            {weatherData ? weatherData.icaoId : "Loading..."}
-          </Text>
-          <Text style={styles.title}>METAR</Text>
-          <Text style={styles.containerText}>
-            {weatherData ? weatherData.rawOb : "Loading..."}
-          </Text>
-          <Text style={styles.title}>Temperature</Text>
-          <Text style={styles.containerText}>
-            {weatherData ? weatherData.temp : "Loading..."} °C
-          </Text>
-          <Text style={styles.title}>Dew Point</Text>
-          <Text style={styles.containerText}>
-            {weatherData ? weatherData.dewp : "Loading..."} °C
-          </Text>
-          <Text style={styles.title}>Wind Direction</Text>
-          <Text style={styles.containerText}>
-            {weatherData ? weatherData.wdir : "Loading..."}°
-          </Text>
-          <Text style={styles.title}>Wind Speed</Text>
-          <Text style={styles.containerText}>
-            {weatherData ? weatherData.wspd : "Loading..."} kt
-          </Text>
-          <Text style={styles.title}>Visibility</Text>
-          <Text style={styles.containerText}>
-            {weatherData ? weatherData.visib : "Loading..."} SM
-          </Text>
-          <Text style={styles.title}>Altimeter Setting</Text>
-          <Text style={styles.containerText}>
-            {weatherData ? weatherData.altim : "Loading..."} hPa
-          </Text>
-        </View>
-      </ScrollView>
+      <View style={styles.ScrollViewContainer}>
+        <ScrollView
+          style={styles.ScrollView}
+          overScrollMode="always"
+          bounces={true}
+        >
+          <View style={styles.container}>
+            <Text style={styles.title}>Current Airport</Text>
+            <Text style={styles.containerText}>
+              {weatherData ? weatherData.icaoId : "Loading..."}
+            </Text>
+            <Text style={styles.title}>METAR</Text>
+            <Text style={styles.containerText}>
+              {weatherData ? weatherData.rawOb : "Loading..."}
+            </Text>
+            <Text style={styles.title}>Temperature</Text>
+            <Text style={styles.containerText}>
+              {weatherData ? weatherData.temp : "Loading..."} °C
+            </Text>
+            <Text style={styles.title}>Dew Point</Text>
+            <Text style={styles.containerText}>
+              {weatherData ? weatherData.dewp : "Loading..."} °C
+            </Text>
+            <Text style={styles.title}>Wind Direction</Text>
+            <Text style={styles.containerText}>
+              {weatherData ? weatherData.wdir : "Loading..."}°
+            </Text>
+            <Text style={styles.title}>Wind Speed</Text>
+            <Text style={styles.containerText}>
+              {weatherData ? weatherData.wspd : "Loading..."} kt
+            </Text>
+            <Text style={styles.title}>Visibility</Text>
+            <Text style={styles.containerText}>
+              {weatherData ? weatherData.visib : "Loading..."} SM
+            </Text>
+            <Text style={styles.title}>Altimeter Setting</Text>
+            <Text style={styles.containerText}>
+              {weatherData ? weatherData.altim : "Loading..."} hPa
+            </Text>
+          </View>
+        </ScrollView>
+      </View>
       <View style={styles.searchBarCon}>
         <MaskedView
           style={styles.maskedView}
@@ -161,6 +165,12 @@ const styles = StyleSheet.create({
     padding: 10,
   },
 
+  ScrollViewContainer: {
+    flex: 1,
+    borderRadius: 28,
+    overflow: "hidden",
+  },
+
   ScrollView: {
     flex: 1,
     borderRadius: 28,
@@ -177,13 +187,13 @@ const styles = StyleSheet.create({
 
   title: {
     fontSize: 18,
-    fontWeight: "600",
+    fontFamily: "SamsungOne-700",
     color: "#FFFFFF",
   },
 
   containerText: {
     fontSize: 14,
-    fontWeight: "400",
+    fontFamily: "VariableOneUISans",
     color: "#FFFFFF",
   },
 
@@ -202,7 +212,7 @@ const styles = StyleSheet.create({
 
   gradientText: {
     fontSize: 16,
-    fontWeight: "600",
+    fontFamily: "SamsungOne-700",
     textAlign: "left",
     marginLeft: 20,
     color: "transparent",
@@ -211,7 +221,7 @@ const styles = StyleSheet.create({
   inputText: {
     flex: 1,
     fontSize: 16,
-    fontWeight: "600",
+    fontFamily: "SamsungOne-700",
     textAlign: "left",
     marginLeft: 20,
   },
@@ -223,7 +233,7 @@ const styles = StyleSheet.create({
     height: "100%",
     width: "100%",
     fontSize: 16,
-    fontWeight: "600",
+    fontFamily: "SamsungOne-700",
     color: "transparent",
     backgroundColor: "transparent",
     marginLeft: 20,
