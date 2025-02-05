@@ -63,8 +63,12 @@ function FlightInfoScreen() {
 
   return (
     <View style={styles.background}>
-      <ScrollView style={styles.ScrollView} overScrollMode="always" bounces={true}>
-        <View style={[styles.container, { marginBottom: 20 }]}>
+      <ScrollView
+        style={styles.ScrollView}
+        overScrollMode="always"
+        bounces={true}
+      >
+        <View style={[styles.container, { marginBottom: 15 }]}>
           <Text style={styles.title}>Current Flight</Text>
           <Text style={styles.containerText}>
             {flightData ? flightData.currentFlight : "Loading..."}
@@ -82,7 +86,8 @@ function FlightInfoScreen() {
             {flightData ? flightData.route : "Loading..."}
           </Text>
         </View>
-        <View style={[styles.container, { marginBottom: 20 }]}>
+        <Text style={styles.containerTitle}>Flight Schedule</Text>
+        <View style={[styles.container, { marginBottom: 15 }]}>
           <Text style={styles.title}>OBT</Text>
           <Text style={styles.containerText}>
             {flightData ? flightData.obt : "Loading..."}
@@ -100,6 +105,7 @@ function FlightInfoScreen() {
             {flightData ? flightData.ibt : "Loading..."}
           </Text>
         </View>
+        <Text style={styles.containerTitle}>Loadsheet</Text>
         <View style={styles.container}>
           <Text style={styles.title}>PAX</Text>
           <Text style={styles.containerText}>
@@ -179,7 +185,7 @@ const loadingStyles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "#000000",
     padding: 10,
-  }
+  },
 });
 
 const styles = StyleSheet.create({
@@ -193,6 +199,14 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#000000",
     borderRadius: 28,
+  },
+
+  containerTitle: {
+    fontSize: 14,
+    fontWeight: "600",
+    color: "#ABABAB",
+    paddingHorizontal: 20,
+    marginBottom: 5,
   },
 
   container: {
