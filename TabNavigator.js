@@ -1,10 +1,25 @@
-import React, { useState, useEffect } from "react";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { StyleSheet, View, Text, TouchableOpacity, Image } from "react-native";
+import React, { useState } from "react";
+import { 
+  StyleSheet, 
+  View, 
+  TouchableOpacity, 
+  Image, 
+  useWindowDimensions 
+} from "react-native";
+import { 
+  createBottomTabNavigator 
+} from "@react-navigation/bottom-tabs";
+import { 
+  createNativeStackNavigator 
+} from "@react-navigation/native-stack";
+import { 
+  createDrawerNavigator,
+  DrawerContentScrollView,
+  DrawerItemList
+} from "@react-navigation/drawer";
 import { StatusBar } from "expo-status-bar";
 import WeatherScreen from "./screens/WeatherScreen";
-import FlightInfoScreen from "./screens/FlightInfoScreen";
+import HomeInfoScreen from "./screens/HomeInfoScreen";
 import HomeScreen from "./screens/HomeScreen";
 import SettingsScreen from "./screens/SettingsScreen";
 import ChangeEmailScreen from "./screens/ChangeEmailScreen";
@@ -12,19 +27,20 @@ import { SignOutViewModel } from "./js/authManager";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
+const Drawer = createDrawerNavigator();
 
 const icons = {
-  "Aero AI": {
-    active: require("./assets/star_inactive.png"),
-    inactive: require("./assets/star.png"),
+  Home: {
+    active: require("./assets/home.png"),
+    inactive: require("./assets/home_inactive.png"),
   },
   Weather: {
     active: require("./assets/weather.png"),
     inactive: require("./assets/weather_inactive.png"),
   },
-  FlightInfo: {
-    active: require("./assets/home.png"),
-    inactive: require("./assets/home_inactive.png"),
+  "Aero Brief": {
+    active: require("./assets/news.png"),
+    inactive: require("./assets/news_inactive.png"),
   },
   Checklist: {
     active: require("./assets/list.png"),
@@ -32,53 +48,121 @@ const icons = {
   },
 };
 
+function ResponsiveNavigator() {
+  const { width } = useWindowDimensions();
+  const isLargeScreen = width >= 768;
+
+  return isLargeScreen ? <DrawerNavigator /> : <TabNavigator />;
+}
+
+function DrawerNavigator({ navigation }) {
+  const { handleSignOut } = SignOutViewModel(navigation);
+
+  const drawerScreenOptions = ({ route }) => ({
+    headerStyle: {
+      height: 46,
+      backgroundColor: "#000000",
+    },
+    headerTintColor: "#FFFFFF",
+    headerTitleStyle: {
+      fontSize: 20,
+      fontFamily: "SamsungSharpSans-Bold",
+    },
+    drawerIcon: ({ focused }) => {
+      const icon = icons[route.name];
+      return (
+        <Image
+          source={focused ? icon.active : icon.inactive}
+          style={styles.icon}
+        />
+      );
+    },
+    drawerActiveTintColor: "#FFFFFF",
+    drawerInactiveTintColor: "#848487",
+    drawerLabelStyle: styles.drawerLabel,
+    headerRight: () => (
+      <TouchableOpacity
+        style={{ paddingRight: 25 }}
+        onPress={() => handleSignOut()}
+      >
+        <Image source={require("./assets/more.png")} style={styles.icon} />
+      </TouchableOpacity>
+    ),
+  });
+
+  return (
+    <Drawer.Navigator
+      screenOptions={drawerScreenOptions}
+      drawerContent={(props) => (
+        <View style={styles.drawerContent}>
+          <DrawerContentScrollView {...props}>
+            <DrawerItemList 
+              {...props}
+              itemStyle={styles.drawerItem}
+              labelStyle={styles.drawerLabel}
+            />
+          </DrawerContentScrollView>
+        </View>
+      )}
+      drawerStyle={styles.drawer}
+    >
+      <Drawer.Screen name="Home" component={HomeInfoScreen} />
+      <Drawer.Screen name="Weather" component={WeatherScreen} />
+      <Drawer.Screen name="Aero Brief" component={HomeScreen} />
+      <Drawer.Screen name="Checklist" component={HomeScreen} />
+    </Drawer.Navigator>
+  );
+}
+
 function MainStack() {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen
-        name="MainTabs"
-        component={TabNavigator}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Settings"
-        component={SettingsScreen}
-        options={({ navigation }) => ({
-          headerShown: true,
-          headerStyle: {
-            height: 46,
-            backgroundColor: "#000000",
-          },
-          headerTintColor: "#FFFFFF",
-          headerTitleStyle: {
-            fontSize: 20,
-            fontWeight: "bold",
-          },
-          headerLeft: () => (
-            <TouchableOpacity
-              style={{ paddingLeft: 10, marginRight: 10 }}
-              onPress={() => navigation.goBack()}
-            >
-              <Image
-                source={require("./assets/arrow.png")}
-                style={styles.icon}
-              />
-            </TouchableOpacity>
-          ),
-        })}
-      />
-      <Stack.Screen
-        name="ChangeEmail"
-        component={ChangeEmailScreen}
-        options={{ headerShown: false }}
-      />
-    </Stack.Navigator>
+    <>
+      <StatusBar style="light" translucent={false} />
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen
+          name="Main"
+          component={ResponsiveNavigator}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Settings"
+          component={SettingsScreen}
+          options={({ navigation }) => ({
+            headerShown: true,
+            headerStyle: {
+              height: 46,
+              backgroundColor: "#000000",
+            },
+            headerTintColor: "#FFFFFF",
+            headerTitleStyle: {
+              fontSize: 20,
+              fontWeight: "bold",
+            },
+            headerLeft: () => (
+              <TouchableOpacity
+                style={{ paddingLeft: 10, marginRight: 10 }}
+                onPress={() => navigation.goBack()}
+              >
+                <Image
+                  source={require("./assets/arrow.png")}
+                  style={styles.icon}
+                />
+              </TouchableOpacity>
+            ),
+          })}
+        />
+        <Stack.Screen
+          name="ChangeEmail"
+          component={ChangeEmailScreen}
+          options={{ headerShown: false }}
+        />
+      </Stack.Navigator>
+    </>
   );
 }
 
 function TabNavigator({ navigation }) {
-  const [activeTab, setActiveTab] = useState("FlightInfo");
-
+  const [activeTab, setActiveTab] = useState("Home");
   const { handleSignOut } = SignOutViewModel(navigation);
 
   const screenOptions = {
@@ -130,7 +214,7 @@ function TabNavigator({ navigation }) {
   const getTabOptions = (routeName) => ({
     tabBarIcon: () => renderTabIcon(routeName, activeTab === routeName),
     tabBarLabelStyle: {
-      fontSize: 11,
+      fontSize: 12,
       fontFamily: "VariableOneUISans",
     },
     headerTitleAlign: "start",
@@ -139,43 +223,40 @@ function TabNavigator({ navigation }) {
   });
 
   return (
-    <>
-      <StatusBar style="light" translucent={false} />
-      <Tab.Navigator
-        initialRouteName="FlightInfo"
-        screenOptions={screenOptions}
-        screenListeners={{
-          state: (e) => {
-            const currentRoute = e.data.state.routes[e.data.state.index].name;
-            setActiveTab(currentRoute);
-          },
-        }}
-      >
+    <Tab.Navigator
+      initialRouteName="Home"
+      screenOptions={screenOptions}
+      screenListeners={{
+        state: (e) => {
+          const currentRoute = e.data.state.routes[e.data.state.index].name;
+          setActiveTab(currentRoute);
+        },
+      }}
+    >
+      <Tab.Screen
+        name="Home"
+        component={HomeInfoScreen}
+        options={getTabOptions("Home")}
+      />
+      <Tab.Screen
+        name="Weather"
+        component={WeatherScreen}
+        options={getTabOptions("Weather")}
+      />
+      <Tab.Screen
+        name="Aero Brief"
+        component={HomeScreen}
+        options={getTabOptions("Aero Brief")}
+      />
+      {["Checklist"].map((screenName) => (
         <Tab.Screen
-          name="FlightInfo"
-          component={FlightInfoScreen}
-          options={getTabOptions("FlightInfo")}
-        />
-        <Tab.Screen
-          name="Weather"
-          component={WeatherScreen}
-          options={getTabOptions("Weather")}
-        />
-        <Tab.Screen
-          name="Aero AI"
+          key={screenName}
+          name={screenName}
           component={HomeScreen}
-          options={getTabOptions("Aero AI")}
+          options={getTabOptions(screenName)}
         />
-        {["Checklist"].map((screenName) => (
-          <Tab.Screen
-            key={screenName}
-            name={screenName}
-            component={HomeScreen}
-            options={getTabOptions(screenName)}
-          />
-        ))}
-      </Tab.Navigator>
-    </>
+      ))}
+    </Tab.Navigator>
   );
 }
 
@@ -188,69 +269,25 @@ const styles = StyleSheet.create({
     width: 24,
     height: 24,
   },
-
   drawer: {
-    backgroundColor: "#171717",
+    backgroundColor: "#17171A",
     width: 305,
     marginTop: 15,
     borderTopRightRadius: 20,
     borderBottomRightRadius: 20,
     overflow: "hidden",
   },
-
-  drawerContainer: {
-    flex: 1,
-  },
-
   drawerContent: {
     flex: 1,
     justifyContent: "space-between",
-    backgroundColor: "#171717",
+    backgroundColor: "#17171A",
   },
-
   drawerItem: {
     backgroundColor: "#171717",
     borderRadius: 0,
   },
-
-  drawerIcon: {
-    width: 30,
-    height: 30,
-  },
-
   drawerLabel: {
     color: "#FFFFFF",
-    fontSize: 16,
-  },
-
-  accountContainer: {
-    height: 55,
-    width: "100%",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#42424a",
-  },
-
-  accountButton: {
-    height: "100%",
-    width: "100%",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "flex-start",
-    flexDirection: "row",
-    backgroundColor: "#171717",
-    gap: 10,
-  },
-
-  accountIcon: {
-    width: 40,
-    height: 40,
-  },
-
-  accountLabel: {
-    color: "#FFFFFF",
-    fontWeight: "400",
     fontSize: 16,
   },
 });
