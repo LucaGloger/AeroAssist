@@ -4,6 +4,7 @@ import {
   View,
   ScrollView,
   Text,
+  Image,
   Alert,
   ActivityIndicator,
 } from "react-native";
@@ -63,6 +64,51 @@ function FlightInfoScreen() {
           overScrollMode="always"
           bounces={true}
         >
+          <View style={[styles.container, { marginBottom: 15 }]}>
+            <View style={styles.titleContainer}>
+              <View style={styles.iconContainer}>
+                <Image
+                  source={require("../assets/flight_icon.png")}
+                  style={styles.icon}
+                />
+              </View>
+              <Text style={styles.title}>Current Flight</Text>
+            </View>
+            <Text style={styles.containerSecondText}>
+              View all details of your current flight from departure to arrival
+              with aircraft model and route.
+            </Text>
+          </View>
+          <View style={[styles.container, { marginBottom: 15 }]}>
+            <View style={styles.titleContainer}>
+              <View style={styles.iconContainer}>
+                <Image
+                  source={require("../assets/calendar.png")}
+                  style={styles.icon}
+                />
+              </View>
+              <Text style={styles.title}>Schedule</Text>
+            </View>
+            <Text style={styles.containerSecondText}>
+              View all essential flight schedule details and key operational
+              times for your flight.
+            </Text>
+          </View>
+          <View style={[styles.container, { marginBottom: 15 }]}>
+            <View style={styles.titleContainer}>
+              <View style={styles.iconContainer}>
+                <Image
+                  source={require("../assets/weight.png")}
+                  style={styles.icon}
+                />
+              </View>
+              <Text style={styles.title}>Loadsheet</Text>
+            </View>
+            <Text style={styles.containerSecondText}>
+              Manage complete aircraft weight data and detailed load
+              distribution details efficiently.
+            </Text>
+          </View>
           <View style={[styles.container, { marginBottom: 15 }]}>
             <Text style={styles.title}>Current Flight</Text>
             <Text style={styles.containerText}>
@@ -180,8 +226,31 @@ const styles = StyleSheet.create({
     width: "100%",
     backgroundColor: "#17171A",
     borderRadius: 28,
-    gap: 10,
+    gap: 15,
     padding: 20,
+  },
+
+  titleContainer: {
+    height: "auto",
+    width: "100%",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "start",
+  },
+
+  iconContainer: {
+    height: 30,
+    width: 30,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#A3A2A7",
+    borderRadius: 30,
+    marginRight: 10,
+  },
+
+  icon: {
+    height: 22,
+    width: 22,
   },
 
   title: {
@@ -194,6 +263,13 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: "VariableOneUISans",
     color: "#FFFFFF",
+  },
+
+  containerSecondText: {
+    fontSize: 12,
+    fontFamily: "VariableOneUISans",
+    color: "#9A999E",
+    lineHeight: 15,
   },
 });
 

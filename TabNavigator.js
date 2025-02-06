@@ -131,8 +131,7 @@ function TabNavigator({ navigation }) {
     tabBarIcon: () => renderTabIcon(routeName, activeTab === routeName),
     tabBarLabelStyle: {
       fontSize: 11,
-      fontWeight: 400,
-      // fontWeight: activeTab === routeName ? "bold" : "normal",
+      fontFamily: "VariableOneUISans",
     },
     headerTitleAlign: "start",
     borderBottomWidth: 0,
