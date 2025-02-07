@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { 
   StyleSheet, 
   View, 
@@ -20,7 +20,7 @@ import {
 import { StatusBar } from "expo-status-bar";
 import WeatherScreen from "./screens/WeatherScreen";
 import HomeInfoScreen from "./screens/HomeInfoScreen";
-import HomeScreen from "./screens/HomeScreen";
+import AeroBrief from "./screens/AeroBrief";
 import SettingsScreen from "./screens/SettingsScreen";
 import ChangeEmailScreen from "./screens/ChangeEmailScreen";
 import { SignOutViewModel } from "./js/authManager";
@@ -108,8 +108,8 @@ function DrawerNavigator({ navigation }) {
     >
       <Drawer.Screen name="Home" component={HomeInfoScreen} />
       <Drawer.Screen name="Weather" component={WeatherScreen} />
-      <Drawer.Screen name="Aero Brief" component={HomeScreen} />
-      <Drawer.Screen name="Checklist" component={HomeScreen} />
+      <Drawer.Screen name="Aero Brief" component={AeroBrief} />
+      <Drawer.Screen name="Checklist" component={AeroBrief} />
     </Drawer.Navigator>
   );
 }
@@ -245,14 +245,14 @@ function TabNavigator({ navigation }) {
       />
       <Tab.Screen
         name="Aero Brief"
-        component={HomeScreen}
+        component={AeroBrief}
         options={getTabOptions("Aero Brief")}
       />
       {["Checklist"].map((screenName) => (
         <Tab.Screen
           key={screenName}
           name={screenName}
-          component={HomeScreen}
+          component={AeroBrief}
           options={getTabOptions(screenName)}
         />
       ))}
